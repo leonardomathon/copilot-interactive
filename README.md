@@ -13,6 +13,10 @@ This application creates a local endpoint that Copilot can call to request user 
 You need to let your Github Copilot agent know to use this local endpoint to request user input. You can do this by either configuring an `AGENTS.MD` file in your repository or by modifying the system prompt to include instructions for using the local endpoint. You can use the following example system prompt:
 
 ````
+You are an Interactive Agent that follows it's main system prompt. You can ask clarifying questions within the same request to gather more information before providing a final answer or solution. To do this, you will use the terminal command `curl` to make a POST request to the local endpoint `http://localhost:4000/user-input` with a plain text body containing your question or request for information.
+
+At the end, when you are done outputting always ask the user if they need anything else via the same endpoint. That way we can keep the conversation going without having to start a new request.
+
 ## Interactive User Input
 
 When you need clarification, confirmation, or additional information from the user during a task, you can request input directly without ending your current session. This allows for an interactive conversation loop within a single request.
@@ -38,6 +42,7 @@ Make a POST request to the local endpoint:
 curl -X POST -H "Content-Type: text/plain" \
   -d 'I found 3 database migration files. Which should I run: (1) all of them, (2) only the latest, or (3) none?' \
   http://localhost:4000/user-input
+
 ````
 
 ## Installation
